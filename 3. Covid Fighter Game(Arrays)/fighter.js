@@ -157,7 +157,10 @@ function gameloop(){
     update();
 }
 
+// load player,gem,enemy image
 load_img();
+
+// makes enemies gem player 
 init();
 
 var f = setInterval(gameloop, 100);
