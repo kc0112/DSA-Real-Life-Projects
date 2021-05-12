@@ -1,9 +1,10 @@
-function init(){
+// initialize variables
+function init() {
     canvas = document.getElementById('mycanvas');
     W = H = canvas.width = canvas.height = 1000;
     pen = canvas.getContext('2d');
     cell_size = 66;
-    food = getrandomfood();
+    food = getrandomfood(); // food object at random position
     game_over = false;
     score = 0;
 
@@ -20,34 +21,40 @@ function init(){
         color: "blue",
         cells: [],
         direction: "right",
-
+        
         createSnake: function(){
             for (var i = this.init_len; i>0; i--){
-                this.cells.push({x:i, y:0});
+                this.cells.push({x:i, y:0}); //ple face fr body
             }
         },
 
         drawSnake: function(){
             for(var i=0; i<this.cells.length; i++){
                 pen.fillStyle = this.color;
+                               // 4*66                                                 width        height       
                 pen.fillRect(this.cells[i].x*cell_size, this.cells[i].y*cell_size, cell_size-2, cell_size-2);
             }
         },
 
+        // food eat = new food + score inc || move forward logic || out = game over
         updateSnake: function(){
             console.log("Updating Snake. ");
 
-            var headX = this.cells[0].x;
-            var headY = this.cells[0].y;
+            var headX = this.cells[0].x;   //4
+            var headY = this.cells[0].y;   //0
 
+            // if snakes gets food -> get new food position + increase score + size increase(don't pop -> don't erase last position)
             if (headX == food.x && headY == food.y){
-                food = getrandomfood();
+                food = getrandomfood();  
                 score += 1;
             }
             else{
-                this.cells.pop();
+                this.cells.pop(); // pop from back so that at next step cell is pushed so that size remains same
             }
             
+            // popped cell 
+            //    now
+            // pushing cell 
             var nextX, nextY;
 
             if (snake.direction == 'right'){
@@ -67,9 +74,10 @@ function init(){
                 nextY = headY - 1;
             }
 
+            // adds a cell at front
             this.cells.unshift({x:nextX, y:nextY});
 
-            /*Write a Logic that prevents snake from going out*/
+            /* Logic that prevents snake from going out*/
             var lastX = Math.round(W/cell_size);
             var lastY = Math.round(H/cell_size);
 
@@ -80,6 +88,7 @@ function init(){
         }
     };
 
+    // snake array 
     snake.createSnake();
     //Add a Event Listener on the Document Object
     function keyPressed(e){
@@ -92,14 +101,15 @@ function init(){
         else if (e.key == 'ArrowDown'){
             snake.direction = 'down';
         }
-        else{
+        else if(e.key == 'ArrowUp'){
             snake.direction = 'up';
         }
     }
-
+    // movement 
     document.addEventListener('keydown', keyPressed);
 }
 
+// erase old frame + snake agya + display food,troffee,score
 function draw(){
     //erase the old frame
     pen.clearRect(0,0,W,H);
@@ -120,9 +130,10 @@ function update(){
     snake.updateSnake();
 }
 
+// returns random new position of food
 function getrandomfood(){
-    var foodX = Math.round( Math.random()*(W-cell_size) / cell_size);
-    var foodY = Math.round( Math.random()*(H-cell_size) / cell_size);
+    var foodX = Math.round( Math.random()*(W-cell_size) / cell_size); // us jgh ko chdke koi bhi jgh
+    var foodY = Math.round( Math.random()*(H-cell_size) / cell_size); // us jgh ko exclude
 
     var food = {
         x: foodX,
@@ -139,9 +150,13 @@ function gameloop(){
         alert("Game Over");
         return;
     }
-    draw();
-    update();
+    draw(); // erase old frame + snake agya + display food,troffee,score
+    update(); // food eat = new food + score inc || move forward logic bs cell array update hti || out = game over
+    // ab bs next time draw call hua to naye array pr snake bna dega
+    
 }
 
+// 1. initialize variable 
 init();
+// 2. start game
 var f = setInterval(gameloop, 100);
