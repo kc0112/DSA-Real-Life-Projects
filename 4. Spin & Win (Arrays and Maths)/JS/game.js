@@ -1,6 +1,7 @@
 //Hello World of Phaser = Basic Game = Single Scene in Spin & Win Game
 // How to create the basic skeleton for the game -> Game Loop
 
+// prize
 let prizes_config = {
     count:12,
     prize_names : ["3000 Credits","35% Off","Nothing","70% OFF","Swagpack","100% OFF","Netflix","50% Off","Amazon Voucher","2 Extra Spin", "CB Tshirt","CB Book"]
@@ -13,13 +14,15 @@ let config = {
 
     scene: {
         preload: preload,
-        create: create,
-        update: update,
+        // create: create,
+        // update: update, //called repeatedly
     }
 };
 
+
 let game = new Phaser.Game(config);
 
+//loads assets
 function preload(){
     console.log("Preload");
     //load object, load some images
@@ -36,9 +39,9 @@ function create(){
     let W = game.config.width;
     let H = game.config.height;
     
-    let background = this.add.sprite(0,0,'background');
-    background.setPosition(W/2,H/2);
-    background.setScale(0.20);
+    let background = this.add.sprite(0,0,'background'); // to make at centre insetad of setPosition -> (0,0)=>(W/2,H/2)
+    background.setPosition(W/2,H/2); // displays image cordinate default from centre placed at 0,0/....set image at W/2,H/2
+    background.setScale(0.20);// shrinks height n width by 20%
     
      //lets create the stand
     let stand = this.add.sprite(W/2,H/2 + 250,'stand');
@@ -47,7 +50,7 @@ function create(){
     //lets create a pin
     let pin = this.add.sprite(W/2,H/2-250,"pin");
     pin.setScale(0.25);
-    pin.depth = 1; // Jitne zada value utni zada dur rahega obj. 0 being max and 0 being min
+    pin.depth = 1; // Jitne zada value utni zada dur rahega obj. 1 being max and 0 being min
     
     //let create wheel
     this.wheel = this.add.sprite(W/2,H/2,"wheel");
@@ -89,7 +92,7 @@ function spinwheel(){
     tween = this.tweens.add({
         targets: this.wheel,
         angle: total_angle,
-        ease: "Cubic.easeOut",
+        ease: "Cubic.easeOut", // stops dhire
         duration: 6000,
         callbackScope:this,
         onComplete:function(){
