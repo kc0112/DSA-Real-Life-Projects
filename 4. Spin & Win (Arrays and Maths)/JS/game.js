@@ -75,7 +75,8 @@ function update(){
     console.log("Updating Continously");
 }
 
-function spinwheel(){
+function spinwheel() {
+    
     
     console.log("You clicked the mouse");
     console.log("Start spinning");
