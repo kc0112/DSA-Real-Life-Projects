@@ -124,7 +124,7 @@ class HuffmanCoder{
             result = result + String.fromCharCode(num);//char value from ascii code(num)
         }
                                 
-                        //function call for tree structure in string form
+                        //function call for tree structure in string form + extra bits + encoded string
         let final_res = this.stringify(huffman_encoder) + '\n' + rem + '\n' + result;
         let info = "Compression Ratio : " + data.length/final_res.length;
         info = "Compression complete and file sent for download" + '\n' + info;
