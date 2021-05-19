@@ -11,7 +11,15 @@ onload = function () {
 
     const coder = new HuffmanCoder();
 
-    upload.addEventListener('change',()=>{ alert("File uploaded") });//when file is uploaded will display an alert
+    upload.addEventListener('change', () => {
+        let ext = upload.value.split(".")[1];
+        if (ext == "txt")
+            alert("File uploaded")
+        else {
+            alert("Please choose a text file !")
+            upload.value = "";
+        }
+    });//when file is uploaded will display an alert
 
     encode.onclick = function () {//on clicking encode button this function is triggered
 
@@ -30,7 +38,7 @@ onload = function () {
             let [encoded, tree_structure, info] = coder.encode(text);//trigger encode function in huffman.js and will recieve the returned values from function(encoded text,tree structure,compression ratio)
             downloadFile(uploadedFile.name.split('.')[0] +'_encoded.txt', encoded);//triggers function downloadFile
             treearea.innerText = tree_structure;//in left space for tree -> display a tree and ..
-            treearea.style.marginTop = '2000px';                                               //..
+            // treearea.style.marginTop = '200px';                                               //..
             temptext.innerText = info;                                                           //compression ratio
         };
         fileReader.readAsText(uploadedFile, "UTF-8");

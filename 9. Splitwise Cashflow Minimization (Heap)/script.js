@@ -41,7 +41,7 @@ onload = function () {
     network2.setOptions(options);
 
     function createData(){
-        const sz = Math.floor(Math.random() * 8) + 2;
+        const sz = Math.floor(Math.random() * 8) + 2; // gets value btn 2-9
 
         // Adding people to nodes array
         let nodes = [];
