@@ -57,7 +57,7 @@ int main(){
         debit += settlement_amount;
         credit -= settlement_amount;
 
-        cout << debit_person << " will pay " << settlement_amount << " to " << credit_person << endl;
+        cout << credit_person << " will pay " << settlement_amount << " to " << debit_person << endl;
 
         if (debit != 0){
             m.insert( make_pair(debit, debit_person) );
