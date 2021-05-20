@@ -13,9 +13,9 @@ onload = function () {
     const options = {
         edges: {
             arrows: {
-                to: true
+                to: true  // arrow >
             },
-            labelHighlightBold: true,
+            labelHighlightBold: true, // if edge selected bold hjao
             font: {
                 size: 20
             }
@@ -35,7 +35,7 @@ onload = function () {
         }
     };
     // initialize your network!
-    let network = new vis.Network(container);
+    let network = new vis.Network(container); // vis provides a network obj that provide the magical graph ui
     network.setOptions(options);
     let network2 = new vis.Network(container2);
     network2.setOptions(options);
@@ -87,25 +87,27 @@ onload = function () {
     };
 
     function solveData() {
-        let data = curr_data;
+        let data = curr_data; //nodes,edges
         const sz = data['nodes'].length;
-        const vals = Array(sz).fill(0);
+        const vals = Array(sz).fill(0); // sari nodes ko ek array me 0 se init
         // Calculating net balance of each person
         for(let i=0;i<data['edges'].length;i++) {
             const edge = data['edges'][i];
-            vals[edge['to'] - 1] += parseInt(edge['label']);
+            // a->30->b   val[b] = 30 , val[a] = -30
+            vals[edge['to'] - 1] += parseInt(edge['label']); // weight
             vals[edge['from'] - 1] -= parseInt(edge['label']);
         }
 
         const pos_heap = new BinaryHeap();
         const neg_heap = new BinaryHeap();
 
-        for(let i=0;i<sz;i++){
-            if(vals[i]>0){
+        for (let i = 0; i < sz; i++){
+            // if transaction +ve -> amount,node insert
+            if(vals[i]>0){ 
                 pos_heap.insert([vals[i],i]);
             } else{
-                neg_heap.insert(([-vals[i],i]));
-                vals[i] *= -1;
+                neg_heap.insert(([-vals[i],i])); //to make min heap
+                vals[i] *= -1; ///...................1
             }
         }
 
@@ -115,12 +117,12 @@ onload = function () {
             const mn = neg_heap.extractMax();
 
             const amt = Math.min(mx[0],mn[0]);
-            const to = mx[1];
+            const to = mx[1]; //node
             const from = mn[1];
 
             new_edges.push({from: from+1, to: to+1, label: String(Math.abs(amt))});
-            vals[to] -= amt;
-            vals[from] -= amt;
+            vals[to] -= amt; //9
+            vals[from] -= amt;//-9 -> 9 at///.....................1
 
             if(mx[0] > mn[0]){
                 pos_heap.insert([vals[to],to]);
