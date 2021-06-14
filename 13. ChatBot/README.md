@@ -1,2 +1,1 @@
-# CBChatBot
-CB ChatBot
+# ChatBot
